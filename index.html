@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You, Always</title>
+    <title>For You, Arieyna</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Playfair Display & Inter -->
@@ -42,11 +42,12 @@
             animation: floatUp 12s linear infinite;
         }
 
-        /* Scroll Reveal / Fade-in Effect */
+        /* Slower Scroll Reveal / Fade-in Effect */
         .fade-in-section {
             opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(32px);
+            /* Increased duration to 1.6s for a smoother, slower fade */
+            transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1), transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
             will-change: opacity, transform;
         }
         .fade-in-section.is-visible {
@@ -84,7 +85,7 @@
         </h1>
 
         <p class="text-rose-900/60 text-sm font-light max-w-md mt-8 leading-relaxed">
-            This page exists because words felt insufficient — so I made you a whole world of them instead.
+            This page exists because words can't describe how much you mean to me, so I made you a a little something special instead.
         </p>
 
         <!-- Scroll Indicator -->
@@ -104,13 +105,13 @@
 
         <div class="space-y-6 border-l border-rose-200/80 pl-6 text-sm text-rose-900/70 leading-relaxed font-light">
             <p>
-                I do not always know how to say the things I feel. You know this. You have sat with my silences and somehow understood them anyway — which is one of the many reasons I am convinced you are a little bit magic.
+                I do not always know how to say the things I feel. You know this. You have sat with my silences and somehow understood them anyway, which is one of the many reasons I am convinced you are special.
             </p>
             <p>
-                You make ordinary life feel like something worth paying attention to. A Tuesday morning with you is better than any grand occasion without you. That is not a small thing. That is everything.
+                You make ordinary life feel like something worth paying attention to. A Monday morning with you is better than any grand occasion without you. That is not a small thing. That is everything.
             </p>
             <p>
-                So here it is, in the most permanent way I know how — written down and made real: I love you. Deeply, quietly, loudly, completely. In every version of every day.
+                So here it is, in the most permanent way I know how... written down and made real. I love you. Deeply, quietly, loudly, completely. In every version of every day.
             </p>
         </div>
 
@@ -179,10 +180,10 @@
     <!-- JavaScript Logic -->
     <script>
         const REASONS = [
-            "The way your eyes crinkle when you laugh for real",
+            "The way you close your mouth when you laugh for real",
             "How you make even ordinary days feel like something worth remembering",
             "Your ridiculous, perfect, completely contagious laugh",
-            "The way you care — quietly, deeply, without making a show of it",
+            "The way you care quietly, deeply, without making a show of it",
             "That you always know exactly what I need before I do",
             "Every single stupid inside joke we have built together",
             "How safe I feel just being next to you",
@@ -232,7 +233,7 @@
                     entry.target.classList.add('is-visible');
                 }
             });
-        }, { threshold: 0.12 });
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.fade-in-section').forEach(section => {
             fadeObserver.observe(section);
@@ -242,7 +243,7 @@
         const audio = document.getElementById('bgAudio');
         const btn = document.getElementById('musicBtn');
         let isPlaying = false;
-        audio.volume = 0.25;
+        audio.volume = 0.15;
 
         btn.onclick = () => {
             if (isPlaying) {
