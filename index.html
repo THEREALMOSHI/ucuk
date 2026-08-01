@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Favorite Person ❤️</title>
+    <title>For My Favorite Person</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
     <style>
         * {
@@ -23,6 +23,18 @@
             padding: 20px;
             overflow-x: hidden;
             position: relative;
+        }
+
+        /* Fixed Overlay for Hearts to Prevent Scrollbar Flickering */
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none; /* Allows buttons to be clickable */
+            overflow: hidden;       /* Prevents hearts from expanding page height */
+            z-index: 1;
         }
 
         .volume-container {
@@ -84,6 +96,8 @@
             border-radius: 24px;
             box-shadow: 0 10px 30px rgba(136, 14, 79, 0.15);
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         h1.headline {
@@ -131,7 +145,7 @@
             background: #f48fb1;
         }
 
-        /* Carousel Container (FIXED LAYOUT) */
+        /* Carousel Container */
         .carousel-container {
             position: relative;
             width: 100%;
@@ -139,7 +153,7 @@
             overflow: hidden;
             box-shadow: 0 6px 18px rgba(0,0,0,0.08);
             background: #fff;
-            touch-action: pan-y; /* Smooth mobile swipe */
+            touch-action: pan-y;
         }
 
         .carousel-slides {
@@ -152,7 +166,7 @@
         .slide {
             min-width: 100%;
             width: 100%;
-            flex-shrink: 0; /* Prevents slide squishing bug */
+            flex-shrink: 0;
             position: relative;
             aspect-ratio: 4/3;
             background: #fce4ec;
@@ -330,7 +344,7 @@
             color: #ad1457;
         }
 
-        /* Floating Hearts */
+        /* Floating Hearts Styling */
         .heart {
             position: absolute;
             color: rgba(236, 64, 122, 0.4);
@@ -346,6 +360,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Floating Hearts Overlay Container -->
+    <div id="hearts-container"></div>
 
     <!-- Floating Audio Toggle -->
     <button class="music-btn" id="musicToggle">
@@ -549,14 +566,18 @@
             document.getElementById('noteModal').style.display = 'none';
         }
 
-        // Floating Hearts Background
+        // Floating Hearts Background (Fixed Container Target)
         function createHearts() {
+            const container = document.getElementById('hearts-container');
+            if (!container) return;
+
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerText = '💖';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            document.body.appendChild(heart);
+            
+            container.appendChild(heart);
 
             setTimeout(() => { heart.remove(); }, 6000);
         }
