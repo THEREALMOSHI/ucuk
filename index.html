@@ -3,586 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Favorite Person</title>
+    <title>For Arieyna ❤️</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
-            min-height: 100vh;
-            color: #880e4f;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Fixed Overlay for Hearts to Prevent Scrollbar Flickering */
-        #hearts-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none; /* Allows buttons to be clickable */
-            overflow: hidden;       /* Prevents hearts from expanding page height */
-            z-index: 1;
-        }
-
-        .volume-container {
-            position: fixed;
-            top: 65px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 6px 12px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            z-index: 100;
-        }
-
-        .volume-container input[type=range] {
-            width: 70px;
-            accent-color: #ec407a;
-            cursor: pointer;
-        }
-
-        /* Music Floating Control */
-        .music-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #ffffff;
-            color: #ec407a;
-            border: 2px solid #ec407a;
-            padding: 10px 18px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .music-btn:hover {
-            transform: scale(1.05);
-            background: #ec407a;
-            color: white;
-        }
-
-        /* Main Card */
-        .main-card {
-            background-color: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(8px);
-            max-width: 650px;
-            width: 100%;
-            margin-top: 50px;
-            margin-bottom: 40px;
-            padding: 35px 25px;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(136, 14, 79, 0.15);
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        h1.headline {
-            font-family: 'Sacramento', cursive;
-            font-size: 3.2rem;
-            color: #ad1457;
-            margin-bottom: 5px;
-        }
-
-        p.sub-heading {
-            font-size: 1.05rem;
-            color: #ad1457;
-            opacity: 0.85;
-            margin-bottom: 25px;
-        }
-
-        /* Gallery Wrapper & Controls */
-        .gallery-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 0 5px;
-        }
-
-        .gallery-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #880e4f;
-        }
-
-        .view-toggle-btn {
-            background: #f8bbd0;
-            color: #880e4f;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .view-toggle-btn:hover {
-            background: #f48fb1;
-        }
-
-        /* Carousel Container */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-            background: #fff;
-            touch-action: pan-y;
-        }
-
-        .carousel-slides {
-            display: flex;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            width: 100%;
-            will-change: transform;
-        }
-
-        .slide {
-            min-width: 100%;
-            width: 100%;
-            flex-shrink: 0;
-            position: relative;
-            aspect-ratio: 4/3;
-            background: #fce4ec;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: pointer;
-            display: block;
-        }
-
-        .slide-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(136, 14, 79, 0.75));
-            color: white;
-            padding: 20px 15px 12px;
-            font-size: 0.9rem;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        /* Carousel Controls */
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.85);
-            color: #880e4f;
-            border: none;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            transition: all 0.2s;
-            z-index: 10;
-        }
-
-        .nav-btn:hover {
-            background: white;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .prev-btn { left: 12px; }
-        .next-btn { right: 12px; }
-
-        /* Carousel Dots */
-        .dots-container {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #f8bbd0;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .dot.active {
-            background: #ec407a;
-            width: 22px;
-            border-radius: 10px;
-        }
-
-        /* Grid View Layout (Hidden by default) */
-        .grid-container {
-            display: none;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .grid-item {
-            aspect-ratio: 1;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            cursor: pointer;
-        }
-
-        .grid-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .grid-item:hover img {
-            transform: scale(1.08);
-        }
-
-        /* Lightbox Fullscreen Modal */
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 300;
-            padding: 20px;
-        }
-
-        .lightbox img {
-            max-width: 90%;
-            max-height: 80vh;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        /* Buttons & Extras */
-        .secret-note-btn {
-            background: #ec407a;
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(236, 64, 122, 0.3);
-            transition: background 0.3s ease;
-            margin-top: 25px;
-        }
-
-        .secret-note-btn:hover { background: #d81b60; }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 200;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 450px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #ad1457;
-        }
-
-        /* Floating Hearts Styling */
-        .heart {
-            position: absolute;
-            color: rgba(236, 64, 122, 0.4);
-            font-size: 20px;
-            pointer-events: none;
-            animation: floatUp 6s linear infinite;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0.8); opacity: 1; }
+        .font-handwriting { font-family: 'Sacramento', cursive; }
+        body { font-family: 'Poppins', sans-serif; }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.8); opacity: 0.6; }
             100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
+        .animate-float { animation: float 6s linear infinite; }
     </style>
 </head>
-<body>
+<body class="bg-gradient-to-br from-pink-100 via-pink-200 to-rose-200 min-h-screen text-rose-950 flex flex-col items-center justify-center p-4 relative overflow-x-hidden">
 
-    <!-- Floating Hearts Overlay Container -->
-    <div id="hearts-container"></div>
+    <!-- Floating Hearts Container -->
+    <div id="hearts-container" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
 
-    <!-- Floating Audio Toggle -->
-    <button class="music-btn" id="musicToggle">
-        <span id="musicIcon">🎵</span> <span id="musicText">Play Music</span>
-    </button>
-    <audio id="bgMusic" loop src="music.mp3"></audio>
-    <div class="volume-container">
-        <span style="font-size: 0.85rem;">🔈</span>
-        <input type="range" id="volumeControl" min="0" max="1" step="0.05" value="0.2">
+    <!-- Floating Audio Control -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        <button id="musicBtn" class="bg-white/90 backdrop-blur-md text-rose-600 border-2 border-rose-400 p-3.5 rounded-full shadow-lg hover:scale-105 transition flex items-center justify-center">
+            <span id="musicIcon" class="text-xl">🎵</span>
+        </button>
+        <audio id="bgMusic" loop src="music.mp3"></audio>
     </div>
 
-    <!-- Main Card -->
-    <div class="main-card">
-        <h1 class="headline">Hi Arieyna! ❤️</h1>
-        <p class="sub-heading">I built this cozy space just for you.</p>
+    <!-- Main Card Container -->
+    <main class="relative z-10 bg-white/80 backdrop-blur-md max-w-xl w-full rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/50 text-center my-8">
+        
+        <h1 class="font-handwriting text-5xl sm:text-6xl text-rose-600 mb-2">Hi Arieyna! ❤️</h1>
+        <p class="text-rose-700/80 text-sm sm:text-base mb-6">A little corner of the internet built just for you.</p>
 
-        <!-- Gallery Section -->
-        <div class="gallery-header">
-            <span class="gallery-title">📸 Our Memories</span>
-            <button class="view-toggle-btn" id="toggleViewBtn" onclick="toggleGalleryView()">Switch to Grid</button>
-        </div>
-
-        <!-- Carousel View -->
-        <div id="carouselView">
-            <div class="carousel-container">
-                <button class="nav-btn prev-btn" onclick="prevSlide()">❮</button>
-                <button class="nav-btn next-btn" onclick="nextSlide()">❯</button>
-                
-                <div class="carousel-slides" id="carouselSlides">
+        <!-- Carousel -->
+        <section class="mb-8">
+            <div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-md bg-rose-50">
+                <div id="slideContainer" class="flex transition-transform duration-500 ease-out h-full w-full">
                     <!-- Slide 1 -->
-                    <div class="slide">
-                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80" alt="Memory 1" onclick="openLightbox(this.src)">
-                        <div class="slide-caption">Our first trip together ✨</div>
+                    <div class="min-w-full h-full relative">
+                        <img src="https://images.unsplash.com/photo-1540807615429-35ff02b20707?w=800&h=600&fit=crop" class="w-full h-full object-cover" alt="Headsheet kiss">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-rose-950/80 to-transparent p-4 text-white text-sm">A tender forehead kiss</div>
                     </div>
                     <!-- Slide 2 -->
-                    <div class="slide">
-                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80" alt="Memory 2" onclick="openLightbox(this.src)">
-                        <div class="slide-caption">Favorite coffee date ☕</div>
+                    <div class="min-w-full h-full relative">
+                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&h=600&fit=crop" class="w-full h-full object-cover" alt="Sunlight">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-rose-950/80 to-transparent p-4 text-white text-sm">Sunlit and inseparable</div>
                     </div>
                     <!-- Slide 3 -->
-                    <div class="slide">
-                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80" alt="Memory 3" onclick="openLightbox(this.src)">
-                        <div class="slide-caption">Sunset walks 🌅</div>
+                    <div class="min-w-full h-full relative">
+                        <img src="https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=800&h=600&fit=crop" class="w-full h-full object-cover" alt="Two people">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-rose-950/80 to-transparent p-4 text-white text-sm">The way you look at me</div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="min-w-full h-full relative">
+                        <img src="https://images.unsplash.com/photo-1514269481880-b9b4ac3b19f1?w=800&h=600&fit=crop" class="w-full h-full object-cover" alt="Warm embrace">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-rose-950/80 to-transparent p-4 text-white text-sm">Home is wherever you are</div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Dots Indicator -->
-            <div class="dots-container" id="dotsContainer">
-                <span class="dot active" onclick="goToSlide(0)"></span>
-                <span class="dot" onclick="goToSlide(1)"></span>
-                <span class="dot" onclick="goToSlide(2)"></span>
+                <!-- Controls -->
+                <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 text-rose-900 w-9 h-9 rounded-full flex items-center justify-center shadow hover:bg-white transition">❮</button>
+                <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 text-rose-900 w-9 h-9 rounded-full flex items-center justify-center shadow hover:bg-white transition">❯</button>
             </div>
-        </div>
+        </section>
 
-        <!-- Grid View (Hidden initially) -->
-        <div class="grid-container" id="gridView">
-            <div class="grid-item">
-                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" alt="Memory 1" onclick="openLightbox(this.src)">
-            </div>
-            <div class="grid-item">
-                <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" alt="Memory 2" onclick="openLightbox(this.src)">
-            </div>
-            <div class="grid-item">
-                <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80" alt="Memory 3" onclick="openLightbox(this.src)">
-            </div>
-        </div>
+        <!-- Reasons Section -->
+        <section class="text-left bg-rose-50/60 p-5 rounded-2xl border border-rose-100 mb-6">
+            <h2 class="text-lg font-semibold text-rose-800 mb-3 flex items-center gap-2">✨ Reasons why you're special</h2>
+            <ul id="reasonsList" class="space-y-2.5 text-sm text-rose-900/90"></ul>
+        </section>
 
-        <button class="secret-note-btn" onclick="openNote()">Open Special Message 💌</button>
-    </div>
-
-    <!-- Lightbox Modal -->
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <img id="lightboxImg" src="" alt="Expanded Memory">
-    </div>
-
-    <!-- Secret Note Modal -->
-    <div class="modal-overlay" id="noteModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeNote()">&times;</span>
-            <h2 style="color: #ad1457; margin-bottom: 15px; font-family: 'Sacramento', cursive; font-size: 2.5rem;">For You</h2>
-            <p style="font-size: 1rem; line-height: 1.6; color: #880e4f;">
-                Just a reminder that you're doing amazing! This website is still a work in progress, but I wanted to make something special for you to check out anytime.
-            </p>
-        </div>
-    </div>
+    </main>
 
     <script>
-        // Music Logic
-        const music = document.getElementById('bgMusic');
-        const musicBtn = document.getElementById('musicToggle');
-        const musicText = document.getElementById('musicText');
-        const musicIcon = document.getElementById('musicIcon');
-        let isPlaying = false;
+        // Exact Reasons List from Figma code
+        const REASONS = [
+            "The way your eyes crinkle when you laugh for real",
+            "How you make even ordinary days feel like something worth remembering",
+            "Your ridiculous, perfect, completely contagious laugh",
+            "The way you care — quietly, deeply, without making a show of it",
+            "That you always know exactly what I need before I do",
+            "Every single stupid inside joke we have built together",
+            "How safe I feel just being next to you",
+            "The fact that you exist, and somehow chose me"
+        ];
 
+        const listEl = document.getElementById('reasonsList');
+        REASONS.forEach(reason => {
+            const li = document.createElement('li');
+            li.className = "flex items-start gap-2.5";
+            li.innerHTML = `<span class="text-rose-500 mt-0.5">💖</span> <span>${reason}</span>`;
+            listEl.appendChild(li);
+        });
+
+        // Carousel logic
+        let index = 0;
+        const total = 4;
+        const slideContainer = document.getElementById('slideContainer');
+
+        function updateSlide() {
+            slideContainer.style.transform = `translateX(-${index * 100}%)`;
+        }
+        function nextSlide() { index = (index + 1) % total; updateSlide(); }
+        function prevSlide() { index = (index - 1 + total) % total; updateSlide(); }
+
+        // Audio logic
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        let playing = false;
         music.volume = 0.2;
 
-        const volumeControl = document.getElementById('volumeControl');
-        volumeControl.addEventListener('input', (e) => {
-            music.volume = e.target.value;
-        });
-
-        musicBtn.addEventListener('click', () => {
-            if (isPlaying) {
+        musicBtn.onclick = () => {
+            if(playing) {
                 music.pause();
-                musicText.innerText = "Play Music";
-                musicIcon.innerText = "🎵";
+                musicIcon.innerText = '🎵';
             } else {
-                music.play().then(() => {
-                    musicText.innerText = "Pause";
-                    musicIcon.innerText = "⏸️";
-                }).catch(() => {
-                    alert("Add your music file named 'music.mp3' to your folder!");
-                });
+                music.play().then(() => { musicIcon.innerText = '⏸️'; })
+                .catch(() => alert('Add music.mp3 to your repo!'));
             }
-            isPlaying = !isPlaying;
-        });
+            playing = !playing;
+        };
 
-        // Carousel State & Logic
-        let currentSlide = 0;
-        const slides = document.getElementById('carouselSlides');
-        const totalSlides = document.querySelectorAll('.slide').length;
-
-        function updateCarousel() {
-            if (!slides) return;
-            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
-            const dots = document.querySelectorAll('.dot');
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateCarousel();
-        }
-
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            updateCarousel();
-        }
-
-        function goToSlide(index) {
-            currentSlide = index;
-            updateCarousel();
-        }
-
-        // Mobile Touch Swipe Support
-        let touchStartX = 0;
-        let touchEndX = 0;
-        const carouselContainer = document.querySelector('.carousel-container');
-
-        if (carouselContainer) {
-            carouselContainer.addEventListener('touchstart', e => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, { passive: true });
-
-            carouselContainer.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                if (touchStartX - touchEndX > 40) nextSlide();
-                if (touchEndX - touchStartX > 40) prevSlide();
-            }, { passive: true });
-        }
-
-        // View Mode Toggle
-        let isGridView = false;
-        function toggleGalleryView() {
-            const carouselView = document.getElementById('carouselView');
-            const gridView = document.getElementById('gridView');
-            const toggleBtn = document.getElementById('toggleViewBtn');
-
-            if (isGridView) {
-                carouselView.style.display = 'block';
-                gridView.style.display = 'none';
-                toggleBtn.innerText = 'Switch to Grid';
-            } else {
-                carouselView.style.display = 'none';
-                gridView.style.display = 'grid';
-                toggleBtn.innerText = 'Switch to Carousel';
-            }
-            isGridView = !isGridView;
-        }
-
-        // Lightbox Functions
-        function openLightbox(src) {
-            document.getElementById('lightboxImg').src = src;
-            document.getElementById('lightbox').style.display = 'flex';
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-
-        // Note Modal Functions
-        function openNote() {
-            document.getElementById('noteModal').style.display = 'flex';
-        }
-
-        function closeNote() {
-            document.getElementById('noteModal').style.display = 'none';
-        }
-
-        // Floating Hearts Background (Fixed Container Target)
-        function createHearts() {
+        // Floating hearts
+        function createHeart() {
             const container = document.getElementById('hearts-container');
-            if (!container) return;
-
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
+            const heart = document.createElement('span');
             heart.innerText = '💖';
+            heart.className = 'absolute bottom-0 text-rose-400/30 animate-float';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            
             container.appendChild(heart);
-
-            setTimeout(() => { heart.remove(); }, 6000);
+            setTimeout(() => heart.remove(), 6000);
         }
-
-        setInterval(createHearts, 800);
+        setInterval(createHeart, 800);
     </script>
 </body>
 </html>
