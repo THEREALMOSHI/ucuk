@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Favorite Person</title>
+    <title>For My Favorite Person ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
     <style>
         * {
@@ -131,7 +131,7 @@
             background: #f48fb1;
         }
 
-        /* Carousel Container */
+        /* Carousel Container (FIXED LAYOUT) */
         .carousel-container {
             position: relative;
             width: 100%;
@@ -139,16 +139,20 @@
             overflow: hidden;
             box-shadow: 0 6px 18px rgba(0,0,0,0.08);
             background: #fff;
+            touch-action: pan-y; /* Smooth mobile swipe */
         }
 
         .carousel-slides {
             display: flex;
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             width: 100%;
+            will-change: transform;
         }
 
         .slide {
             min-width: 100%;
+            width: 100%;
+            flex-shrink: 0; /* Prevents slide squishing bug */
             position: relative;
             aspect-ratio: 4/3;
             background: #fce4ec;
@@ -159,6 +163,7 @@
             height: 100%;
             object-fit: cover;
             cursor: pointer;
+            display: block;
         }
 
         .slide-caption {
@@ -354,7 +359,7 @@
 
     <!-- Main Card -->
     <div class="main-card">
-        <h1 class="headline">Hi Arieyna! </h1>
+        <h1 class="headline">Hi Arieyna! ❤️</h1>
         <p class="sub-heading">I built this cozy space just for you.</p>
 
         <!-- Gallery Section -->
@@ -436,7 +441,6 @@
         const musicIcon = document.getElementById('musicIcon');
         let isPlaying = false;
 
-        // set background volume
         music.volume = 0.2;
 
         const volumeControl = document.getElementById('volumeControl');
@@ -464,10 +468,12 @@
         let currentSlide = 0;
         const slides = document.getElementById('carouselSlides');
         const totalSlides = document.querySelectorAll('.slide').length;
-        const dots = document.querySelectorAll('.dot');
 
         function updateCarousel() {
+            if (!slides) return;
             slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            const dots = document.querySelectorAll('.dot');
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentSlide);
             });
@@ -488,7 +494,24 @@
             updateCarousel();
         }
 
-        // View Mode Toggle (Carousel vs Grid)
+        // Mobile Touch Swipe Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const carouselContainer = document.querySelector('.carousel-container');
+
+        if (carouselContainer) {
+            carouselContainer.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            carouselContainer.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                if (touchStartX - touchEndX > 40) nextSlide();
+                if (touchEndX - touchStartX > 40) prevSlide();
+            }, { passive: true });
+        }
+
+        // View Mode Toggle
         let isGridView = false;
         function toggleGalleryView() {
             const carouselView = document.getElementById('carouselView');
