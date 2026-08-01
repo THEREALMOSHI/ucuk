@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Favorite Person ❤️</title>
+    <title>For My Favorite Person</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
     <style>
         * {
@@ -23,6 +23,26 @@
             padding: 20px;
             overflow-x: hidden;
             position: relative;
+        }
+
+        .volume-container {
+            position: fixed;
+            top: 65px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 6px 12px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 100;
+        }
+
+        .volume-container input[type=range] {
+            width: 70px;
+            accent-color: #ec407a;
+            cursor: pointer;
         }
 
         /* Music Floating Control */
@@ -327,10 +347,14 @@
         <span id="musicIcon">🎵</span> <span id="musicText">Play Music</span>
     </button>
     <audio id="bgMusic" loop src="music.mp3"></audio>
+    <div class="volume-container">
+        <span style="font-size: 0.85rem;">🔈</span>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.05" value="0.2">
+    </div>
 
     <!-- Main Card -->
     <div class="main-card">
-        <h1 class="headline">Hi 𑣲Arieyna! </h1>
+        <h1 class="headline">Hi Arieyna! </h1>
         <p class="sub-heading">I built this cozy space just for you.</p>
 
         <!-- Gallery Section -->
@@ -411,6 +435,14 @@
         const musicText = document.getElementById('musicText');
         const musicIcon = document.getElementById('musicIcon');
         let isPlaying = false;
+
+        // set background volume
+        music.volume = 0.2;
+
+        const volumeControl = document.getElementById('volumeControl');
+        volumeControl.addEventListener('input', (e) => {
+            music.volume = e.target.value;
+        });
 
         musicBtn.addEventListener('click', () => {
             if (isPlaying) {
