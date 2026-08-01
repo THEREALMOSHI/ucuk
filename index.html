@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You, Always</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF6F5;
+            color: #2D2529;
+        }
+        .font-serif-custom {
+            font-family: 'Playfair Display', serif;
+        }
+        @keyframes float {
+            0% { transform: translateY(105vh) scale(0.8); opacity: 0.4; }
+            100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+        }
+        .animate-heart {
+            animation: float 10s linear infinite;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen overflow-x-hidden selection:bg-rose-100">
+
+    <!-- Floating Background Hearts -->
+    <div id="hearts-bg" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+    <!-- Music Player Controls (Bottom Right) -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        <div class="bg-white/80 backdrop-blur-sm border border-rose-200/60 text-[11px] text-rose-800/70 px-3 py-1.5 rounded-full shadow-sm">
+            Place <span class="font-semibold text-rose-900">music.mp3</span> in public/
+        </div>
+        <button id="musicBtn" class="w-10 h-10 bg-[#9E2A4B] text-white rounded-full flex items-center justify-center shadow-md hover:bg-[#88223E] transition-all duration-300">
+            <svg id="musicIcon" class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+        </button>
+        <audio id="bgAudio" loop src="music.mp3"></audio>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 relative z-10">
+        <p class="text-[11px] uppercase tracking-[0.25em] text-rose-800/50 font-medium mb-8">FOR YOU, ALWAYS</p>
+        
+        <h1 class="font-serif-custom text-5xl sm:text-7xl font-normal leading-[1.15] max-w-2xl text-[#1F171B]">
+            You are my <br>
+            <span class="italic text-[#9E2A4B]">favourite</span> <br>
+            everything.
+        </h1>
+
+        <p class="text-rose-900/60 text-sm font-light max-w-md mt-8 leading-relaxed">
+            This page exists because words felt insufficient — so I made you a whole world of them instead.
+        </p>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+            <span class="text-[10px] uppercase tracking-[0.2em] text-rose-800/40">SCROLL</span>
+            <div class="w-[1px] h-8 bg-rose-200"></div>
+        </div>
+    </section>
+
+    <!-- Letter Section -->
+    <section class="max-w-2xl mx-auto px-6 py-24 relative z-10">
+        <p class="text-[11px] uppercase tracking-[0.25em] text-rose-800/50 font-medium mb-12">A LETTER</p>
+
+        <h2 class="font-serif-custom text-3xl sm:text-4xl leading-tight text-[#1F171B] mb-12">
+            "There is a you-shaped piece of every good memory I have."
+        </h2>
+
+        <div class="space-y-6 border-l border-rose-200/80 pl-6 text-sm text-rose-900/70 leading-relaxed font-light">
+            <p>
+                I do not always know how to say the things I feel. You know this. You have sat with my silences and somehow understood them anyway — which is one of the many reasons I am convinced you are a little bit magic.
+            </p>
+            <p>
+                You make ordinary life feel like something worth paying attention to. A Tuesday morning with you is better than any grand occasion without you. That is not a small thing. That is everything.
+            </p>
+            <p>
+                So here it is, in the most permanent way I know how — written down and made real: I love you. Deeply, quietly, loudly, completely. In every version of every day.
+            </p>
+        </div>
+
+        <p class="font-serif-custom italic text-[#9E2A4B] text-xl mt-10">
+            — Always yours
+        </p>
+    </section>
+
+    <!-- Moments Section (Photo Grid) -->
+    <section class="py-20 relative z-10">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="flex items-center gap-4 mb-12">
+                <div class="h-[1px] bg-rose-200/60 flex-1"></div>
+                <p class="text-[11px] uppercase tracking-[0.25em] text-rose-800/50 font-medium">MOMENTS</p>
+                <div class="h-[1px] bg-rose-200/60 flex-1"></div>
+            </div>
+
+            <!-- Image Grid matching screenshot -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
+                <div class="rounded-2xl overflow-hidden aspect-[3/4] shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1540807615429-35ff02b20707?w=600&h=800&fit=crop" class="w-full h-full object-cover" alt="Forehead kiss">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-[4/3] shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&h=600&fit=crop" class="w-full h-full object-cover" alt="Sunlight silhouette">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-[3/4] shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1514269481880-b9b4ac3b19f1?w=600&h=800&fit=crop" class="w-full h-full object-cover" alt="Warm embrace">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-[4/3] shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1525268771113-32d9e9021a97?w=800&h=600&fit=crop" class="w-full h-full object-cover" alt="Gazing at each other">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reasons Section -->
+    <section class="max-w-2xl mx-auto px-6 py-24 relative z-10">
+        <h2 class="font-serif-custom text-3xl sm:text-4xl text-[#1F171B] mb-2">
+            A few reasons
+        </h2>
+        <h3 class="font-serif-custom italic text-3xl sm:text-4xl text-[#9E2A4B] mb-12">
+            I love you
+        </h3>
+
+        <div id="reasons-list" class="divide-y divide-rose-200/60">
+            <!-- JS dynamically injects the items -->
+        </div>
+    </section>
+
+    <!-- Footer Banner Section -->
+    <footer class="bg-[#9E2A4B] text-white py-24 text-center relative z-10">
+        <h2 class="font-serif-custom italic text-5xl sm:text-6xl font-normal mb-4">
+            I choose you.
+        </h2>
+        <p class="text-[10px] uppercase tracking-[0.25em] text-rose-200/80 font-medium mb-12">
+            EVERY SINGLE DAY. WITHOUT QUESTION.
+        </p>
+
+        <div class="flex items-center justify-center gap-3 opacity-40">
+            <div class="w-8 h-[1px] bg-white"></div>
+            <span class="text-xs">♥</span>
+            <div class="w-8 h-[1px] bg-white"></div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // List items from screenshot
+        const REASONS = [
+            "The way your eyes crinkle when you laugh for real",
+            "How you make even ordinary days feel like something worth remembering",
+            "Your ridiculous, perfect, completely contagious laugh",
+            "The way you care — quietly, deeply, without making a show of it",
+            "That you always know exactly what I need before I do",
+            "Every single stupid inside joke we have built together",
+            "How safe I feel just being next to you",
+            "The fact that you exist, and somehow chose me"
+        ];
+
+        const listContainer = document.getElementById('reasons-list');
+        REASONS.forEach((reason, index) => {
+            const num = String(index + 1).padStart(2, '0');
+            const item = document.createElement('div');
+            item.className = "py-5 flex items-start gap-8";
+            item.innerHTML = `
+                <span class="text-xs text-rose-300 font-mono mt-0.5">${num}</span>
+                <span class="text-sm text-rose-900/80 font-light leading-relaxed">${reason}</span>
+            `;
+            listContainer.appendChild(item);
+        });
+
+        // Floating Hearts Animation Generator
+        function createHeart() {
+            const container = document.getElementById('hearts-bg');
+            const heart = document.createElement('div');
+            heart.innerHTML = '♥';
+            heart.className = 'absolute text-rose-300/30 animate-heart text-xs';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 12000);
+        }
+        setInterval(createHeart, 1200);
+
+        // Music Toggle Logic
+        const audio = document.getElementById('bgAudio');
+        const btn = document.getElementById('musicBtn');
+        let isPlaying = false;
+        audio.volume = 0.25;
+
+        btn.onclick = () => {
+            if (isPlaying) {
+                audio.pause();
+                btn.classList.remove('bg-[#88223E]');
+            } else {
+                audio.play().catch(() => alert('Please add a music.mp3 file to your repository root directory!'));
+                btn.classList.add('bg-[#88223E]');
+            }
+            isPlaying = !isPlaying;
+        };
+    </script>
+</body>
+</html>
