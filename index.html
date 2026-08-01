@@ -20,18 +20,44 @@
         .font-serif-custom {
             font-family: 'Playfair Display', serif;
         }
-        @keyframes float {
-            0% { transform: translateY(105vh) scale(0.8); opacity: 0.4; }
-            100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+
+        /* Upward Floating Hearts Animation */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) scale(0.6) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.6;
+            }
+            85% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1) rotate(15deg);
+                opacity: 0;
+            }
         }
-        .animate-heart {
-            animation: float 10s linear infinite;
+        .animate-heart-float {
+            animation: floatUp 12s linear infinite;
+        }
+
+        /* Scroll Reveal / Fade-in Effect */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body class="relative min-h-screen overflow-x-hidden selection:bg-rose-100">
 
-    <!-- Floating Background Hearts -->
+    <!-- Floating Upward Hearts Layer -->
     <div id="hearts-bg" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
 
     <!-- Music Player Controls (Bottom Right) -->
@@ -48,7 +74,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 relative z-10">
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 relative z-10 fade-in-section">
         <p class="text-[11px] uppercase tracking-[0.25em] text-rose-800/50 font-medium mb-8">FOR YOU, ALWAYS</p>
         
         <h1 class="font-serif-custom text-5xl sm:text-7xl font-normal leading-[1.15] max-w-2xl text-[#1F171B]">
@@ -69,7 +95,7 @@
     </section>
 
     <!-- Letter Section -->
-    <section class="max-w-2xl mx-auto px-6 py-24 relative z-10">
+    <section class="max-w-2xl mx-auto px-6 py-24 relative z-10 fade-in-section">
         <p class="text-[11px] uppercase tracking-[0.25em] text-rose-800/50 font-medium mb-12">A LETTER</p>
 
         <h2 class="font-serif-custom text-3xl sm:text-4xl leading-tight text-[#1F171B] mb-12">
@@ -94,7 +120,7 @@
     </section>
 
     <!-- Moments Section (Photo Grid) -->
-    <section class="py-20 relative z-10">
+    <section class="py-20 relative z-10 fade-in-section">
         <div class="max-w-5xl mx-auto px-4">
             <div class="flex items-center gap-4 mb-12">
                 <div class="h-[1px] bg-rose-200/60 flex-1"></div>
@@ -102,7 +128,7 @@
                 <div class="h-[1px] bg-rose-200/60 flex-1"></div>
             </div>
 
-            <!-- Image Grid with Reliable Public Stock Links -->
+            <!-- Image Grid -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
                 <div class="rounded-2xl overflow-hidden aspect-[3/4] shadow-sm bg-rose-100">
                     <img src="https://picsum.photos/id/1025/600/800" class="w-full h-full object-cover" alt="Moment 1">
@@ -117,15 +143,11 @@
                     <img src="https://picsum.photos/id/64/800/600" class="w-full h-full object-cover" alt="Moment 4">
                 </div>
             </div>
-            
-            <p class="text-center text-xs text-rose-800/40 mt-4">
-                💡 Tip: Replace the image <code class="bg-rose-100/80 px-1 rounded">src</code> attributes with your own direct photo links!
-            </p>
         </div>
     </section>
 
     <!-- Reasons Section -->
-    <section class="max-w-2xl mx-auto px-6 py-24 relative z-10">
+    <section class="max-w-2xl mx-auto px-6 py-24 relative z-10 fade-in-section">
         <h2 class="font-serif-custom text-3xl sm:text-4xl text-[#1F171B] mb-2">
             A few reasons
         </h2>
@@ -134,12 +156,12 @@
         </h3>
 
         <div id="reasons-list" class="divide-y divide-rose-200/60">
-            <!-- JS dynamically injects the items -->
+            <!-- JS dynamically populates items -->
         </div>
     </section>
 
     <!-- Footer Banner Section -->
-    <footer class="bg-[#9E2A4B] text-white py-24 text-center relative z-10">
+    <footer class="bg-[#9E2A4B] text-white py-24 text-center relative z-10 fade-in-section">
         <h2 class="font-serif-custom italic text-5xl sm:text-6xl font-normal mb-4">
             I choose you.
         </h2>
@@ -156,6 +178,7 @@
 
     <!-- JavaScript Logic -->
     <script>
+        // Reasons list items
         const REASONS = [
             "The way your eyes crinkle when you laugh for real",
             "How you make even ordinary days feel like something worth remembering",
@@ -179,20 +202,47 @@
             listContainer.appendChild(item);
         });
 
-        // Floating Hearts
-        function createHeart() {
+        // 1. Upward Floating Hearts Generator
+        function createUpwardHeart() {
             const container = document.getElementById('hearts-bg');
             const heart = document.createElement('div');
-            heart.innerHTML = '♥';
-            heart.className = 'absolute text-rose-300/30 animate-heart text-xs';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+            
+            // Subtle pink SVG heart matching Figma
+            heart.innerHTML = `
+                <svg class="w-3.5 h-3.5 fill-[#E8B4BC]" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            `;
+            
+            heart.className = 'absolute animate-heart-float pointer-events-none opacity-0';
+            heart.style.left = Math.random() * 95 + 'vw';
+            
+            // Randomize speed and sizes slightly
+            const duration = Math.random() * 6 + 9; // 9s - 15s
+            heart.style.animationDuration = duration + 's';
+            
             container.appendChild(heart);
-            setTimeout(() => heart.remove(), 12000);
+            setTimeout(() => heart.remove(), duration * 1000);
         }
-        setInterval(createHeart, 1200);
 
-        // Music Toggle Logic
+        // Spawn hearts continuously
+        setInterval(createUpwardHeart, 900);
+        for(let i = 0; i < 6; i++) setTimeout(createUpwardHeart, i * 400);
+
+        // 2. Intersection Observer for Scroll Fade-In Effect
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            fadeObserver.observe(section);
+        });
+
+        // 3. Audio Toggle Logic
         const audio = document.getElementById('bgAudio');
         const btn = document.getElementById('musicBtn');
         let isPlaying = false;
@@ -203,7 +253,7 @@
                 audio.pause();
                 btn.classList.remove('bg-[#88223E]');
             } else {
-                audio.play().catch(() => alert('Please add a music.mp3 file to your repository root directory!'));
+                audio.play().catch(() => alert('Please make sure music.mp3 is uploaded to your root folder!'));
                 btn.classList.add('bg-[#88223E]');
             }
             isPlaying = !isPlaying;
